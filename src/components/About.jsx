@@ -1,6 +1,6 @@
 import { animate, motion, useInView, useScroll, useTransform } from 'motion/react'
 import { useEffect, useRef } from 'react'
-import { about, stats } from '../data'
+import { about, highlights, stats } from '../data'
 import { section } from '../ui'
 import SectionHead from './SectionHead'
 
@@ -78,6 +78,27 @@ export default function About() {
             >
               <Counter value={s.value} suffix={s.suffix} />
               <span className="max-w-[24ch] text-[15px] text-muted max-md:text-right">{s.label}</span>
+            </motion.li>
+          ))}
+        </ul>
+        <ul className="mt-[clamp(40px,6vw,72px)] grid grid-cols-3 gap-8 border-t border-line pt-8 max-md:grid-cols-1 max-md:gap-6">
+          {highlights.map((h, i) => (
+            <motion.li
+              key={h.label}
+              className="flex flex-col gap-3"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
+            >
+              <span className="font-mono text-[12px] leading-[normal] tracking-[0.1em] text-accent-text uppercase">
+                {h.label}
+              </span>
+              <ul className="grid gap-2 text-[15px] text-fg-2">
+                {h.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </motion.li>
           ))}
         </ul>

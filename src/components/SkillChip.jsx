@@ -1,78 +1,58 @@
 import { motion } from 'motion/react'
 import {
-  siAxios,
   siClaude,
+  siCss,
   siCypress,
   siDocker,
   siElectron,
-  siEslint,
   siExpo,
   siExpress,
-  siFirebase,
   siGit,
-  siGithub,
   siGitlab,
   siGooglechrome,
-  siGooglemaps,
   siHtml5,
-  siI18next,
   siJavascript,
   siJsonwebtokens,
   siMongodb,
   siMui,
+  siMysql,
   siNodedotjs,
-  siPostgresql,
-  siPosthog,
   siPostman,
-  siPrettier,
   siReact,
   siRedis,
   siRedux,
   siSentry,
-  siSonarqubeserver,
   siTailwindcss,
   siTypescript,
-  siVite,
-  siVitest,
   siZod,
 } from 'simple-icons'
 import { ease } from '../motion'
 
 const brands = {
-  axios: siAxios,
   claude: siClaude,
+  css: siCss,
   cypress: siCypress,
   docker: siDocker,
   electron: siElectron,
-  eslint: siEslint,
   expo: siExpo,
   express: siExpress,
-  firebase: siFirebase,
   git: siGit,
-  github: siGithub,
   gitlab: siGitlab,
   googlechrome: siGooglechrome,
-  googlemaps: siGooglemaps,
   html5: siHtml5,
-  i18next: siI18next,
   javascript: siJavascript,
   jsonwebtokens: siJsonwebtokens,
   mongodb: siMongodb,
   mui: siMui,
+  mysql: siMysql,
   nodedotjs: siNodedotjs,
-  postgresql: siPostgresql,
-  posthog: siPosthog,
   postman: siPostman,
-  prettier: siPrettier,
   react: siReact,
   redis: siRedis,
   redux: siRedux,
   sentry: siSentry,
-  sonarqubeserver: siSonarqubeserver,
   tailwindcss: siTailwindcss,
   typescript: siTypescript,
-  vite: siVite,
-  vitest: siVitest,
   zod: siZod,
 }
 
@@ -125,7 +105,7 @@ const glyphs = {
 const glyphColors = { aws: '#FF9900' }
 
 // Very dark marks (Express, GitHub…) switch to the text colour in dark mode, and
-// very pale ones (JavaScript, Vitest…) are darkened in light mode.
+// very pale ones (JavaScript…) are darkened in light mode.
 function toneOf(hex) {
   const n = parseInt(hex.replace('#', ''), 16)
   const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => {

@@ -16,11 +16,13 @@ const list = {
   show: { transition: { staggerChildren: 0.03, delayChildren: 0.2 } },
 }
 
-// Three boxes on the first row and two wider ones under them; two per row on
-// tablets (an odd last one goes full width); one per row on phones.
+// An even number of boxes sits two per row; an odd number puts three on the first
+// row and wider ones under them. Two per row on tablets (an odd last one goes full
+// width); one per row on phones.
 function span(i, count) {
+  const desktop = count % 2 === 0 || i >= 3 ? 'col-span-3' : 'col-span-2'
   const tablet = i === count - 1 && count % 2 === 1 ? 'max-2xl:col-span-full' : 'max-2xl:col-span-3'
-  return `${i < 3 ? 'col-span-2' : 'col-span-3'} ${tablet} max-sm:col-span-full`
+  return `${desktop} ${tablet} max-sm:col-span-full`
 }
 
 export default function Skills() {

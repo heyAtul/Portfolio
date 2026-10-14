@@ -1,0 +1,110 @@
+<!doctype html>
+<!--
+  LinkedIn banner, 1584×396 (LinkedIn's recommended size).
+  Render with Chrome headless:
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars \
+    --window-size=1584,396 --force-device-scale-factor=2 --virtual-time-budget=8000 \
+    --screenshot=linkedin-banner@2x.png linkedin-banner.html
+  The profile photo sits over the bottom-left (~x 40–360, y 240+), so nothing important lives there.
+-->
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=block"
+  rel="stylesheet"
+/>
+<style>
+  :root {
+    --bg: #0b0f19;
+    --fg: #e5e9f0;
+    --fg-2: #a7b0c0;
+    --muted: #7d8799;
+    --line: rgba(148, 163, 184, 0.14);
+    --accent: #6ea8ff;
+    --mark: #3b82f6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1584px; height: 396px; overflow: hidden; background: var(--bg); }
+  body {
+    position: relative;
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Background: grid that fades out toward the left, plus a blue glow top-right. */
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+    background-size: 66px 66px;
+    background-position: -1px -1px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%, #000 100%);
+  }
+  .glow {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(700px 420px at 92% -10%, rgba(59, 130, 246, 0.28), transparent 70%),
+      radial-gradient(520px 320px at 40% 120%, rgba(56, 189, 248, 0.08), transparent 70%);
+  }
+
+  /* Top-left: logo + domain. Sits above where the profile photo lands. */
+  .brand {
+    position: absolute; left: 64px; top: 52px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .brand svg { width: 56px; height: 56px; border-radius: 13px; box-shadow: 0 0 0 1px var(--line); }
+  .brand span {
+    font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .brand span em { font-style: normal; color: var(--muted); }
+
+  /* Right: the message. */
+  .copy {
+    position: absolute; right: 112px; top: 0; bottom: 0;
+    display: flex; flex-direction: column; justify-content: center; align-items: flex-end;
+    text-align: right;
+  }
+  h1 {
+    font-size: 72px; line-height: 1.04; font-weight: 700; letter-spacing: -0.028em;
+  }
+  h1 .soft { color: var(--fg-2); font-weight: 600; }
+  h1 i {
+    font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
+    font-size: 1.12em; letter-spacing: -0.01em; color: var(--accent);
+  }
+  .rule { margin-top: 30px; width: 860px; height: 1px; background: var(--line); }
+  .meta {
+    margin-top: 22px;
+    font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  }
+  .meta b { font-weight: 500; color: var(--fg-2); }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="glow"></div>
+
+  <div class="brand">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#111827"/><path transform="translate(8.54 42.80)" fill="#e5e9f0" d="M6.87 0.3Q4.38 0.3 2.925 -1.05Q1.47 -2.4 1.47 -4.71Q1.47 -7.199999999999999 3.195 -8.535Q4.92 -9.87 8.16 -9.87H11.58V-11.1Q11.58 -12.059999999999999 10.905000000000001 -12.629999999999999Q10.23 -13.2 9.09 -13.2Q8.04 -13.2 7.35 -12.719999999999999Q6.66 -12.24 6.51 -11.4H2.16Q2.4299999999999997 -13.889999999999999 4.335 -15.344999999999999Q6.24 -16.8 9.24 -16.8Q12.389999999999999 -16.8 14.235 -15.254999999999999Q16.08 -13.709999999999999 16.08 -11.1V0.0H11.73V-2.6999999999999997H11.01L11.76 -3.75Q11.76 -1.89 10.425 -0.7949999999999999Q9.09 0.3 6.87 0.3ZM8.549999999999999 -3.0Q9.87 -3.0 10.725 -3.705Q11.58 -4.41 11.58 -5.55V-7.319999999999999H8.25Q7.2299999999999995 -7.319999999999999 6.6 -6.734999999999999Q5.97 -6.1499999999999995 5.97 -5.1899999999999995Q5.97 -4.17 6.66 -3.585Q7.35 -3.0 8.549999999999999 -3.0Z"/><path transform="translate(8.54 42.80)" fill="#e5e9f0" d="M28.2 0.0Q26.46 0.0 25.14 -0.735Q23.82 -1.47 23.085 -2.7899999999999996Q22.35 -4.109999999999999 22.35 -5.85V-17.849999999999998H17.25V-21.9H26.85V-5.85Q26.85 -5.04 27.345 -4.545Q27.84 -4.05 28.65 -4.05H33.45V0.0Z"/><rect x="44.99" y="38.60" width="9" height="4.5" rx="1" fill="#3b82f6"/></svg>
+    <span>atulcode<em>.com</em></span>
+  </div>
+
+  <div class="copy">
+    <h1>
+      <span class="soft">From the pixel you tap</span><br />
+      to the <i>query</i> that answers it.
+    </h1>
+    <div class="rule"></div>
+    <div class="meta">
+      <b>React</b> · <b>React Native</b> · <b>Node.js</b> · <b>MongoDB</b> · <b>AWS</b>
+    </div>
+  </div>
+</body>
+</html>
