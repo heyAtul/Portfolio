@@ -1,0 +1,156 @@
+<!doctype html>
+<!--
+  Real-time Chat project thumbnail, 1200×627 (LinkedIn's link/media preview size).
+  Render with Chrome headless:
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars \
+    --window-size=1200,627 --force-device-scale-factor=2 --virtual-time-budget=8000 \
+    --screenshot=chat-thumbnail@2x.png chat-thumbnail.html
+  Only the app's UI, edge to edge, at the real app's sizes and colours (from the Chat
+  repo's theme.js and components, desktop layout). It shows only what the app actually
+  does: no ticks, typing or online status.
+-->
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  :root {
+    --text: #111b21;
+    --sub: #667781;
+    --icon: #54656f;
+    --panel: #f0f2f5;
+    --border: #d1d7db;
+    --divider: #e9edef;
+    --wall: #efeae2;
+    --out: #d9fdd3;
+    --avatar: #00a884;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 627px; overflow: hidden; background: #fff; }
+  body {
+    display: flex;
+    font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  .ico { width: 24px; height: 24px; fill: var(--icon); flex-shrink: 0; }
+  .av {
+    display: grid; place-items: center; flex-shrink: 0;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--avatar); color: #fff; font-size: 18px; line-height: 1;
+  }
+  .bar {
+    height: 59px; flex-shrink: 0;
+    display: flex; align-items: center;
+    background: var(--panel); padding: 0 16px;
+  }
+  .name { font-size: 17px; line-height: 21px; white-space: nowrap; }
+  .sub { font-size: 14px; line-height: 20px; color: var(--sub); white-space: nowrap; }
+
+  /* Left: the chat list (30% wide, as on large screens). */
+  .list { width: 360px; flex-shrink: 0; display: flex; flex-direction: column; border-right: 1px solid var(--border); }
+  .list .bar { justify-content: space-between; }
+  .search { padding: 7px 12px; border-bottom: 1px solid var(--divider); }
+  .search div {
+    height: 35px; border-radius: 8px; background: var(--panel);
+    display: flex; align-items: center; gap: 16px; padding: 0 12px;
+    font-size: 15px; color: var(--sub);
+  }
+  .search .ico { width: 20px; height: 20px; }
+  .row { height: 72px; display: flex; align-items: center; gap: 12px; padding-left: 12px; }
+  .row.on { background: var(--panel); }
+  .row .av { width: 49px; height: 49px; font-size: 20px; }
+  .row div {
+    flex: 1; min-width: 0; height: 100%;
+    display: flex; flex-direction: column; justify-content: center;
+    border-bottom: 1px solid var(--divider); padding-right: 16px;
+  }
+
+  /* Right: the open chat. */
+  .chat { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .chat .bar { gap: 12px; }
+  .chat .bar .name { font-size: 16px; }
+  .chat .bar .sub { font-size: 13px; }
+  .wall {
+    flex: 1; min-height: 0;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    background: var(--wall); padding: 12px 8% 14px;
+  }
+  .day {
+    align-self: center; margin-bottom: 2px;
+    padding: 5px 12px; border-radius: 7.5px; background: #fff;
+    box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);
+    font-size: 12.5px; color: var(--icon);
+  }
+  .msg {
+    position: relative; max-width: 65%; margin-top: 2px;
+    padding: 6px 8px 8px; border-radius: 7.5px;
+    font-size: 14.2px; line-height: 19px;
+    box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);
+  }
+  /* Room at the end of the text so the time never covers it. */
+  .msg::after { content: ''; display: inline-block; width: 58px; }
+  .msg time {
+    position: absolute; right: 7px; bottom: 3px;
+    font-size: 11px; line-height: 15px; color: var(--sub);
+  }
+  .in { align-self: flex-start; background: #fff; }
+  .out { align-self: flex-end; background: var(--out); }
+  /* The first bubble of a run: more space above, a square corner and a tail. */
+  .tail { margin-top: 12px; }
+  .tail.in { border-top-left-radius: 0; }
+  .tail.out { border-top-right-radius: 0; }
+  .tail::before {
+    content: ''; position: absolute; top: 0; width: 0; height: 0;
+    border-bottom: 8px solid transparent;
+  }
+  .tail.in::before { left: -8px; border-right: 8px solid #fff; }
+  .tail.out::before { right: -8px; border-left: 8px solid var(--out); }
+  .compose { height: 62px; gap: 8px; }
+  .compose span {
+    flex: 1; height: 42px; border-radius: 8px; background: #fff;
+    display: flex; align-items: center; padding: 0 12px;
+    font-size: 15px; color: var(--sub);
+  }
+</style>
+</head>
+<body>
+  <div class="list">
+    <div class="bar">
+      <span class="av">A</span>
+      <svg class="ico" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    </div>
+    <div class="search">
+      <div>
+        <svg class="ico" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        Search or start new chat
+      </div>
+    </div>
+    <!-- New users are named after their email, so the app shows the email as the name too. -->
+    <div class="row on"><span class="av">A</span><div><p class="name">ayand@example.com</p><p class="sub">ayand@example.com</p></div></div>
+    <div class="row"><span class="av">S</span><div><p class="name">sahil@example.com</p><p class="sub">sahil@example.com</p></div></div>
+  </div>
+
+  <div class="chat">
+    <div class="bar">
+      <span class="av">A</span>
+      <div>
+        <p class="name">ayand@example.com</p>
+        <p class="sub">ayand@example.com</p>
+      </div>
+    </div>
+    <div class="wall">
+      <span class="day">TODAY</span>
+      <p class="msg in tail">Did the deploy go through?<time>4:20 pm</time></p>
+      <p class="msg out tail">Yes, it’s live now<time>4:21 pm</time></p>
+      <p class="msg out">Try it on your phone too<time>4:21 pm</time></p>
+      <p class="msg in tail">Just did, works great<time>4:22 pm</time></p>
+      <p class="msg in">Messages show up instantly<time>4:22 pm</time></p>
+      <p class="msg out tail">Socket.IO doing its thing<time>4:23 pm</time></p>
+    </div>
+    <div class="bar compose">
+      <span>Type a message</span>
+      <svg class="ico" viewBox="0 0 24 24"><path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </div>
+  </div>
+</body>
+</html>
