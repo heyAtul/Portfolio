@@ -1,0 +1,151 @@
+LINKEDIN PROJECTS: Atul Lilhare
+Paste each field into LinkedIn: Profile > Add section > Projects.
+Thumbnails are in this folder (branding/). Upload the @2x version.
+
+
+============================================================
+1. REAL-TIME CHAT
+============================================================
+
+PROJECT NAME
+Real-time Chat
+
+DESCRIPTION
+A WhatsApp-style messaging app, built end to end with a React front end and a Node.js API.
+
+• Passwordless sign-in: you enter your email, get a 6-digit code and you're in. An account is created on your first login.
+• Find people by email and chat one-to-one in real time over Socket.IO. Every message is saved in MongoDB, so the full history loads when you open a chat.
+• Messages sync across all your open tabs and devices. If someone new messages you, they show up in your chat list even if you were offline when they sent it.
+• Familiar chat interface with message bubbles, timestamps, and day labels (Today, Yesterday, then the date). On phones it switches to a single-panel layout.
+• Secure sessions in httpOnly cookies, so page scripts can't read them. The same login protects both the API and the live chat connection.
+• Front end hosted on Cloudflare, API on Render.
+
+SHORT DESCRIPTION
+WhatsApp-style real-time chat with email OTP login, built with React, Socket.IO, Express and MongoDB.
+
+SKILLS
+React.js · Socket.IO · Node.js · Express.js · MongoDB
+
+DATES
+Sep 2026 – Oct 2026
+
+MEDIA
+Image: chat-thumbnail@2x.png
+  Title: Real-time Chat
+  Description: The chat screen: contacts on the left, a live one-to-one conversation on the right.
+Link: https://chat.atulcode.com
+  Title: Real-time Chat (Live)
+  Description: Try it: sign in with your email and a one-time code, then search for someone and start chatting.
+Link: https://github.com/heyAtul/Chat
+  Title: Real-time Chat (Source code)
+  Description: React, Socket.IO, Express 5 and MongoDB. Setup steps are in the README.
+
+
+============================================================
+2. URLSHORTY: URL SHORTENER
+============================================================
+
+PROJECT NAME
+URLShorty: URL Shortener
+
+DESCRIPTION
+A link shortener with user accounts, built with Node.js, Express 5 and MongoDB.
+
+• Sign up in three steps: enter your name and email, confirm it with a 6-digit code, then choose a password. Only verified accounts can sign in.
+• Paste a long link to get a short one, then copy it or download it as a QR code (PNG or SVG).
+• Every link counts its clicks. Your private dashboard lists all your links with their click totals, and you can delete any of them.
+• Sign-in codes are stored hashed, expire after 10 minutes and lock after five wrong tries. Sessions use httpOnly cookies.
+• Server-rendered pages with light and dark themes, set up for search engines with page titles, descriptions and a sitemap.
+• Runs as serverless functions on Vercel.
+
+SHORT DESCRIPTION
+A URL shortener with user accounts: sign up with an email code, shorten links, track clicks and download QR codes. Built with Node.js, Express 5 and MongoDB.
+
+SKILLS
+Node.js · Express.js · MongoDB · JSON Web Token (JWT) · Vercel
+
+DATES
+Sep 2026 – Oct 2026
+
+MEDIA
+Image: urlshorty-thumbnail@2x.png
+  Title: URLShorty
+  Description: The dashboard: shorten a link, then copy it, get its QR code and see how many clicks it has.
+Link: https://url.atulcode.com
+  Title: URLShorty (Live)
+  Description: Try it: create a free account, shorten a link and download its QR code.
+Link: https://github.com/heyAtul/URLSHORTNER
+  Title: URLShorty (Source code)
+  Description: Node.js, Express 5 and MongoDB. Setup steps are in the README.
+
+
+============================================================
+3. YOURLABTEST
+============================================================
+
+PROJECT NAME
+YourLabTest
+
+DESCRIPTION
+A community-funded supplement testing platform, built as a React and Express monorepo. Lab-testing a single supplement costs too much for one person, so the idea is for people to vote on the products they want tested and share the cost.
+
+This beta covers the voting side:
+• Browse supplement categories such as whey protein and creatine, with live product and category counts.
+• Each category page groups products by brand and sorts them by votes, with brand filters and search.
+• Tap "I'm Interested" to vote for a product. Votes are saved in MongoDB.
+• An admin panel to add, edit and bulk-delete products, and to create new brands as you go.
+• React 19 and Material UI on the front end, with an Express 5 API on MongoDB.
+
+SHORT DESCRIPTION
+A community-funded supplement testing platform (beta). People browse supplements by category and brand and vote for the ones they want lab-tested, with an admin panel to manage products. Built with React, Material UI, Express 5 and MongoDB.
+
+SKILLS
+React.js · Material UI · Node.js · Express.js · MongoDB
+
+DATES
+Mar 2026 – Mar 2026
+
+MEDIA
+Image: yourlabtest-thumbnail@2x.png
+  Title: YourLabTest
+  Description: The home page of YourLabTest, a community-funded supplement testing platform (beta).
+Link: https://github.com/heyAtul/YourLabTest
+  Title: YourLabTest (Source code)
+  Description: React and Material UI client with an Express 5 and MongoDB API, in one monorepo.
+
+
+============================================================
+4. ATULCODE PORTFOLIO
+============================================================
+
+PROJECT NAME
+AtulCode Portfolio
+
+DESCRIPTION
+My personal portfolio site, where I show my work experience, skills and side projects in one place. I designed and built it with Claude Code.
+
+• Built with React 19, Vite and Tailwind CSS, with smooth scrolling and animation that follows the scroll
+• Prerendered to static HTML with structured data, so search engines can read the whole page without running JavaScript
+• Dark and light themes with a circular reveal when you switch, and animations turn off for visitors who choose reduced motion
+• Project cards have animated previews and filter tabs, and the Chrome extension card shows its live user count and rating from the Chrome Web Store
+• Hosted on Cloudflare
+
+SHORT DESCRIPTION
+Personal portfolio built with React 19, Vite and Tailwind CSS: scroll-linked animation, dark/light themes, and prerendered for SEO.
+
+SKILLS
+React.js · Tailwind CSS · Vite · JavaScript · SEO
+
+DATES
+Oct 2026 – Oct 2026
+
+MEDIA
+Image: portfolio-thumbnail@2x.png
+  Title: AtulCode Portfolio
+  Description: The home page of my portfolio: experience, skills and projects in one place.
+Link: https://atulcode.com
+  Title: AtulCode Portfolio (Live)
+  Description: My personal site, built with React 19, Vite and Tailwind CSS.
+Link: https://github.com/heyAtul/Portfolio
+  Title: AtulCode Portfolio (Source code)
+  Description: React 19, Vite, Tailwind CSS, Motion and Lenis, prerendered for SEO.
