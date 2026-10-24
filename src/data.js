@@ -245,7 +245,7 @@ export const projects = [
       'Community-funded supplement testing, in beta: users vote on supplements and pool money for unbiased lab tests, because one lab test is too expensive for one person. Browse categories like whey protein and creatine, filter by brand and vote; an admin panel manages brands and products. A React + MUI client and an Express 5 + MongoDB API.',
     tags: ['React', 'MUI', 'Tailwind', 'Express 5', 'MongoDB'],
     repo: 'https://github.com/heyAtul/YourLabTest',
-    visual: 'labtest',
+    image: '/projects/yourlabtest.jpg',
   },
   {
     id: 'chat',
@@ -257,7 +257,7 @@ export const projects = [
     tags: ['React', 'Socket.IO', 'Express 5', 'MongoDB', 'Resend'],
     repo: 'https://github.com/heyAtul/Chat',
     live: 'https://chat.atulcode.com',
-    visual: 'chat',
+    image: '/projects/chat.jpg',
   },
   {
     id: 'url-shortener',
@@ -269,7 +269,7 @@ export const projects = [
     tags: ['Node.js', 'Express 5', 'MongoDB', 'JWT', 'Vercel'],
     repo: 'https://github.com/heyAtul/URLSHORTNER',
     live: 'https://url.atulcode.com',
-    visual: 'shortener',
+    image: '/projects/url-shortener.jpg',
   },
   {
     id: 'portfolio',
@@ -280,7 +280,7 @@ export const projects = [
       'The site you’re scrolling. React 19 and Vite, with Lenis smooth scrolling and Motion for scroll-linked animation — tuned to stay at 60fps.',
     tags: ['React 19', 'Vite', 'Motion', 'Lenis'],
     repo: 'https://github.com/heyAtul/Portfolio',
-    visual: 'portfolio',
+    image: '/projects/portfolio.jpg',
     madeWithClaude: true,
   },
   {
@@ -294,10 +294,9 @@ export const projects = [
     repo: 'https://github.com/heyAtul/DOM-Styler-Custom-CSS-Injector',
     live: 'https://chromewebstore.google.com/detail/custom-css-injector/aebiehgbcchamlofdpcmdlfohffohghn',
     liveLabel: 'Chrome Web Store',
-    liveCursor: 'Install',
     // Users and rating are fetched live from the Chrome Web Store (see useStoreStats.js).
     storeId: 'aebiehgbcchamlofdpcmdlfohffohghn',
-    visual: 'injector',
+    image: '/projects/css-injector.jpg',
     madeWithClaude: true,
   },
 ]

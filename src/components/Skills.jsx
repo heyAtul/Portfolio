@@ -7,8 +7,8 @@ import SectionHead from './SectionHead'
 import SkillChip from './SkillChip'
 
 const box = {
-  hidden: { opacity: 0, y: 40 },
-  show: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.9, ease, delay: (i % 3) * 0.08 } }),
+  hidden: { opacity: 0, y: 16 },
+  show: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.6, ease, delay: (i % 3) * 0.08 } }),
 }
 
 const list = {

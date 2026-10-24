@@ -4,7 +4,6 @@ import { profile } from '../data'
 import { ease } from '../motion'
 import { btn, btnGhost, btnSm } from '../ui'
 import { ArrowIcon, MailIcon } from './Icons'
-import Magnetic from './Magnetic'
 
 const to = encodeURIComponent(profile.email)
 const subject = encodeURIComponent('Hi Atul, from your portfolio')
@@ -60,21 +59,18 @@ export default function EmailButton() {
 
   return (
     <div className="relative">
-      <Magnetic strength={0.45}>
-        <a
-          href={mailto}
-          onClick={onClick}
-          className="group/link flex aspect-square w-[clamp(190px,18vw,250px)] flex-col items-center justify-center gap-2.5 rounded-full bg-(image:--accent-fill) text-center text-ink [transition:scale_0.6s_var(--ease),background-color_0.4s] hover:scale-[1.06] hover:bg-fg hover:bg-none hover:text-page"
-          data-cursor="Email me"
-        >
-          <MailIcon size={30} />
-          <span className="text-[17px] leading-tight font-semibold tracking-[-0.02em]">
-            Want to connect?
-          </span>
-          <span className="font-mono text-[11.5px] leading-[normal] font-medium">{profile.email}</span>
-          <ArrowIcon size={20} />
-        </a>
-      </Magnetic>
+      <a
+        href={mailto}
+        onClick={onClick}
+        className="group/link flex aspect-square w-[clamp(190px,18vw,250px)] flex-col items-center justify-center gap-2.5 rounded-full bg-(image:--accent-fill) text-center text-ink [transition:scale_0.6s_var(--ease),background-color_0.4s] hover:scale-[1.06] hover:bg-fg hover:bg-none hover:text-page"
+      >
+        <MailIcon size={30} />
+        <span className="text-[17px] leading-tight font-semibold tracking-[-0.02em]">
+          Want to connect?
+        </span>
+        <span className="font-mono text-[11.5px] leading-[normal] font-medium">{profile.email}</span>
+        <ArrowIcon size={20} />
+      </a>
 
       <AnimatePresence>
         {fallback && (

@@ -1,8 +1,6 @@
 // Tailwind class strings shared by several components.
 
-// A clipping box for text that slides up into view. Its child needs `block`.
-export const mask = 'block overflow-hidden'
-// Big title lines: room inside the clip for descenders and italic overhang.
+// Big title lines: room for descenders and italic overhang.
 export const titleMask = 'block overflow-hidden pr-[0.06em] pb-[0.09em] -mb-[0.06em]'
 
 // Serif italic accent word, coloured with the theme's accent (a gradient in light mode).
@@ -10,7 +8,7 @@ export const emphasis =
   'pr-[0.05em] font-serif font-normal tracking-[-0.02em] italic bg-(image:--em-fill) bg-clip-text text-transparent'
 
 // Buttons: combine `btn` with one size and one colour.
-// `group/link` drives the letter roll (RollText) and the arrow nudge (ArrowIcon).
+// `group/link` drives the arrow nudge (ArrowIcon).
 export const btn =
   'group/link inline-flex items-center whitespace-nowrap rounded-full border font-medium transition-[background-color,border-color,color] duration-[450ms] ease-smooth'
 export const btnLg = 'h-[52px] gap-2.5 px-6 text-[15px]'

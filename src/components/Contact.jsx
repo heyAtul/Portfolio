@@ -1,17 +1,17 @@
 import { motion } from 'motion/react'
 import { profile, site } from '../data'
 import { ease, fadeUp, reveal } from '../motion'
-import { btn, btnGhost, btnSm, emphasis, eyebrow, mask, titleMask } from '../ui'
+import { btn, btnGhost, btnSm, emphasis, eyebrow, titleMask } from '../ui'
 import Clock from './Clock'
 import EmailButton from './EmailButton'
 import { BriefcaseIcon, CodeIcon, GitHubIcon, ResumeIcon } from './Icons'
-import RollText from './RollText'
 
 const inView = { once: true, margin: '-10% 0px' }
 
+// The big name in the footer: each letter rises into view, one after another.
 const letter = {
   hidden: { y: '100%' },
-  show: (i) => ({ y: '0%', transition: { duration: 1, ease, delay: i * 0.035 } }),
+  show: (i) => ({ y: '0%', transition: { duration: 0.7, ease, delay: i * 0.025 } }),
 }
 
 export default function Contact() {
@@ -45,10 +45,10 @@ export default function Contact() {
 
         <div className="mt-[clamp(40px,6vw,72px)] flex items-center justify-between gap-10 max-md:flex-col max-md:items-start">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={inView}
-            transition={{ duration: 1, ease, delay: 0.2 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
           >
             <p className="max-w-[40ch] text-[clamp(1.05rem,1.35vw,1.22rem)] text-fg-2">
               Always happy to talk shop — interesting problems, side projects, or just good
@@ -63,7 +63,7 @@ export default function Contact() {
                 className={`${btn} ${btnSm} ${btnGhost}`}
               >
                 <GitHubIcon />
-                <RollText text={`@${profile.githubHandle}`} />
+                @{profile.githubHandle}
               </a>
               <a
                 href={profile.leetcode}
@@ -72,7 +72,7 @@ export default function Contact() {
                 className={`${btn} ${btnSm} ${btnGhost}`}
               >
                 <CodeIcon />
-                <RollText text={`LeetCode · ${profile.leetcodeHandle}`} />
+                LeetCode · {profile.leetcodeHandle}
               </a>
               <a
                 href={profile.linkedin}
@@ -81,7 +81,7 @@ export default function Contact() {
                 className={`${btn} ${btnSm} ${btnGhost}`}
               >
                 <BriefcaseIcon />
-                <RollText text="LinkedIn" />
+                LinkedIn
               </a>
               <a
                 href={profile.resume}
@@ -90,16 +90,16 @@ export default function Contact() {
                 className={`${btn} ${btnSm} ${btnGhost}`}
               >
                 <ResumeIcon />
-                <RollText text="Resume" />
+                Resume
               </a>
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.6 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={inView}
-            transition={{ duration: 1.1, ease, delay: 0.25 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
           >
             <EmailButton />
           </motion.div>
@@ -115,7 +115,7 @@ export default function Contact() {
           viewport={{ once: true, margin: '0px 0px -5% 0px' }}
         >
           {[...profile.name].map((ch, i) => (
-            <span className={`${mask} pb-[0.04em]`} key={i}>
+            <span className="block overflow-hidden pb-[0.04em]" key={i}>
               <motion.span className="block" variants={letter} custom={i}>
                 {ch === ' ' ? '\u00A0' : ch}
               </motion.span>
@@ -126,10 +126,10 @@ export default function Contact() {
           <span>
             © {new Date().getFullYear()} {profile.name} · {site.name}
           </span>
-          <span className="max-sm:hidden">Built with React, Motion, Lenis &amp; Tailwind</span>
+          <span className="max-sm:hidden">Built with React &amp; Tailwind</span>
           <Clock />
-          <a href="#top" className="group/link inline-flex gap-1.5 text-fg">
-            <RollText text="Back to top" /> ↑
+          <a href="#top" className="inline-flex gap-1.5 text-fg hover:text-accent-text">
+            Back to top ↑
           </a>
         </div>
       </footer>

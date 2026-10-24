@@ -1,11 +1,10 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { useEffect, useState } from 'react'
 import { profile } from '../data'
-import { btn, btnGhost, btnSm, mask } from '../ui'
+import { pauseSmoothScroll } from '../smoothScroll'
+import { btn, btnGhost, btnSm } from '../ui'
 import Clock from './Clock'
 import { GitHubIcon, ResumeIcon } from './Icons'
-import Magnetic from './Magnetic'
-import RollText from './RollText'
 import ThemeToggle from './ThemeToggle'
 
 const links = [
@@ -17,10 +16,9 @@ const links = [
 ]
 
 const ease = [0.76, 0, 0.24, 1]
-const burgerLine = 'absolute right-[13px] left-[13px] h-[1.5px] bg-fg transition-transform duration-500 ease-snap'
-const origin = 'at calc(100% - 40px) 36px'
+const burgerLine = 'absolute right-[13px] left-[13px] h-[1.5px] bg-fg transition-transform duration-300'
 
-export default function Nav({ lenis }) {
+export default function Nav() {
   const { scrollY } = useScroll()
   const [hidden, setHidden] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -32,11 +30,11 @@ export default function Nav({ lenis }) {
     setScrolled(y > 24)
   })
 
-  // Lenis is started/stopped synchronously so an anchor click in the menu can scroll right away.
+  // The page behind the open menu stays still: `menu-open` on <html> for native scrolling,
+  // and smooth scrolling paused. Done synchronously, so a menu link can scroll right away.
   const toggle = (next) => {
     setOpen(next)
-    if (next) lenis.current?.stop()
-    else lenis.current?.start()
+    pauseSmoothScroll(next)
     document.documentElement.classList.toggle('menu-open', next)
   }
 
@@ -45,12 +43,12 @@ export default function Nav({ lenis }) {
     const onKey = (e) => {
       if (e.key !== 'Escape') return
       setOpen(false)
-      lenis.current?.start()
+      pauseSmoothScroll(false)
       document.documentElement.classList.remove('menu-open')
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open, lenis])
+  }, [open])
 
   return (
     <>
@@ -64,7 +62,7 @@ export default function Nav({ lenis }) {
         <div className="wrap grid grid-cols-[1fr_auto_1fr] items-center gap-6 max-lg:grid-cols-[1fr_auto]">
           <a
             href="#top"
-            className="group/link inline-flex items-center gap-3 justify-self-start font-semibold tracking-[-0.01em]"
+            className="inline-flex items-center gap-3 justify-self-start font-semibold tracking-[-0.01em]"
           >
             {/* The favicon itself, so the logo and the browser tab always match. */}
             <img
@@ -72,19 +70,15 @@ export default function Nav({ lenis }) {
               alt=""
               width="36"
               height="36"
-              className="size-9 rounded-lg ring-1 ring-white/12 transition-transform duration-600 ease-smooth group-hover/link:-rotate-12 group-hover/link:scale-[1.06]"
+              className="size-9 rounded-lg ring-1 ring-white/12"
             />
-            <RollText text={profile.name} />
+            {profile.name}
           </a>
 
           <nav className="flex gap-[34px] text-[15px] text-fg-2 max-lg:hidden" aria-label="Primary">
             {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="group/link transition-colors duration-300 hover:text-fg"
-              >
-                <RollText text={l.label} />
+              <a key={l.href} href={l.href} className="transition-colors duration-300 hover:text-fg">
+                {l.label}
               </a>
             ))}
           </nav>
@@ -92,28 +86,24 @@ export default function Nav({ lenis }) {
           <div className="flex items-center gap-[18px] justify-self-end">
             <Clock className="max-lg:hidden" />
             <ThemeToggle />
-            <Magnetic strength={0.25} className="max-xs:hidden">
-              <a
-                href={profile.github}
-                target="_blank"
-                rel="noreferrer"
-                className={`${btn} ${btnSm} ${btnGhost}`}
-              >
-                <GitHubIcon />
-                <RollText text="GitHub" />
-              </a>
-            </Magnetic>
-            <Magnetic strength={0.25} className="max-sm:hidden">
-              <a
-                href={profile.resume}
-                target="_blank"
-                rel="noreferrer"
-                className={`${btn} ${btnSm} ${btnGhost}`}
-              >
-                <ResumeIcon />
-                <RollText text="Resume" />
-              </a>
-            </Magnetic>
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noreferrer"
+              className={`${btn} ${btnSm} ${btnGhost} max-xs:hidden`}
+            >
+              <GitHubIcon />
+              GitHub
+            </a>
+            <a
+              href={profile.resume}
+              target="_blank"
+              rel="noreferrer"
+              className={`${btn} ${btnSm} ${btnGhost} max-sm:hidden`}
+            >
+              <ResumeIcon />
+              Resume
+            </a>
             <button
               type="button"
               className="relative hidden size-11 rounded-full border border-line-2 max-lg:block"
@@ -136,29 +126,24 @@ export default function Nav({ lenis }) {
         {open && (
           <motion.div
             className="fixed inset-0 z-70 flex flex-col justify-between bg-card px-(--gutter) pt-[calc(var(--nav-h)_+_32px)] pb-(--gutter)"
-            initial={{ clipPath: `circle(0% ${origin})` }}
-            animate={{ clipPath: `circle(150% ${origin})` }}
-            exit={{ clipPath: `circle(0% ${origin})` }}
-            transition={{ duration: 0.8, ease }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
           >
             <nav aria-label="Mobile">
               {links.map((l, i) => (
-                <div key={l.href} className={mask}>
-                  <motion.a
-                    className="flex items-baseline gap-3.5 pt-0.5 pb-1.5 text-[clamp(2.8rem,13vw,5rem)] leading-[1.02] font-semibold tracking-[-0.045em]"
-                    href={l.href}
-                    onClick={() => toggle(false)}
-                    initial={{ y: '110%' }}
-                    animate={{ y: '0%' }}
-                    exit={{ y: '110%' }}
-                    transition={{ duration: 0.7, ease, delay: 0.15 + i * 0.06 }}
-                  >
-                    <span className="font-mono text-[13px] leading-[normal] font-normal tracking-normal text-accent-text">
-                      0{i + 1}
-                    </span>
-                    {l.label}
-                  </motion.a>
-                </div>
+                <a
+                  key={l.href}
+                  className="flex items-baseline gap-3.5 pt-0.5 pb-1.5 text-[clamp(2.8rem,13vw,5rem)] leading-[1.02] font-semibold tracking-[-0.045em]"
+                  href={l.href}
+                  onClick={() => toggle(false)}
+                >
+                  <span className="font-mono text-[13px] leading-[normal] font-normal tracking-normal text-accent-text">
+                    0{i + 1}
+                  </span>
+                  {l.label}
+                </a>
               ))}
             </nav>
             <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-t border-line pt-5 font-mono text-[13px] leading-[normal] text-fg-2">

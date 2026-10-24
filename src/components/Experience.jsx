@@ -1,7 +1,6 @@
 import { motion, useScroll, useSpring } from 'motion/react'
 import { useRef } from 'react'
 import { experience } from '../data'
-import { ease } from '../motion'
 import { badge, section, tag, tags } from '../ui'
 import { ArrowIcon } from './Icons'
 import SectionHead from './SectionHead'
@@ -39,10 +38,10 @@ export default function Experience() {
             <div key={job.company} className="contents" style={{ '--row': i + 1 }}>
               <motion.div
                 className="col-start-1 row-(--row) flex flex-col items-end gap-3.5 pt-3 text-right max-lg:hidden"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={inView}
-                transition={{ duration: 1, ease }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
               >
                 {job.current && <span className={badge}>Current</span>}
                 <p className="font-mono text-[13px] leading-[normal] tracking-[0.08em] text-muted uppercase">
@@ -72,10 +71,10 @@ export default function Experience() {
 
               <motion.article
                 className="relative col-start-3 row-(--row) overflow-hidden rounded-(--radius) border border-line bg-card p-[clamp(24px,3.4vw,44px)] [box-shadow:var(--soft-shadow)] after:pointer-events-none after:absolute after:-top-[45%] after:-right-[15%] after:aspect-square after:w-[70%] after:bg-[radial-gradient(circle,var(--accent-glow),transparent_60%)] max-lg:col-start-2"
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={inView}
-                transition={{ duration: 1.1, ease }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
               >
                 <p className="hidden font-mono text-[12px] leading-[normal] tracking-[0.08em] text-muted uppercase max-lg:mb-[18px] max-lg:flex max-lg:flex-wrap max-lg:items-center max-lg:gap-3">
                   {job.current && <span className={badge}>Current</span>}
@@ -86,7 +85,6 @@ export default function Experience() {
                     href={job.url}
                     target="_blank"
                     rel="noreferrer"
-                    data-cursor="Visit"
                     className="group/link inline-flex items-start gap-[0.08em] transition-colors duration-[400ms] hover:text-accent-text"
                   >
                     {job.company}
@@ -95,17 +93,13 @@ export default function Experience() {
                 </h3>
                 <p className="mt-3.5 text-[clamp(1.1rem,1.6vw,1.35rem)] text-fg-2">{job.role}</p>
                 <ul className="mt-7 grid gap-3.5 border-t border-line pt-6">
-                  {job.points.map((p, j) => (
-                    <motion.li
+                  {job.points.map((p) => (
+                    <li
                       key={p}
                       className="relative pl-[26px] text-fg-2 before:absolute before:top-[0.75em] before:left-0 before:h-0.5 before:w-3.5 before:bg-mark"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={inView}
-                      transition={{ duration: 0.8, ease, delay: 0.2 + j * 0.08 }}
                     >
                       {p}
-                    </motion.li>
+                    </li>
                   ))}
                 </ul>
                 <div className="relative mt-7 grid gap-4 border-t border-line pt-[26px]">

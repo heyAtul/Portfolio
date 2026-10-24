@@ -1,75 +1,33 @@
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from 'motion/react'
-import { useEffect, useRef, useState } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
+import { useEffect, useState } from 'react'
 import { profile, projects } from '../data'
-import { ease } from '../motion'
-import { btn, btnAccent, btnGhost, btnLg, dot, emphasis, titleMask } from '../ui'
+import { btn, btnAccent, btnGhost, btnLg, dot, emphasis } from '../ui'
 import { ArrowIcon, BriefcaseIcon, CodeIcon, GitHubIcon, ResumeIcon } from './Icons'
-import Magnetic from './Magnetic'
-import RollText from './RollText'
 
-
-const rise = {
-  hidden: { y: '115%', rotate: 3 },
-  show: (i) => ({ y: '0%', rotate: 0, transition: { duration: 1.25, ease, delay: 0.25 + i * 0.1 } }),
-}
-
+// Everything fades in once on load, a beat apart.
 const fade = {
-  hidden: { opacity: 0, y: 24 },
-  show: (i) => ({ opacity: 1, y: 0, transition: { duration: 1, ease, delay: 0.6 + i * 0.08 } }),
+  hidden: { opacity: 0, y: 12 },
+  show: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut', delay: i * 0.08 } }),
 }
 
-export default function Hero({ ready }) {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '22%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.94])
-
-  // Soft glow that trails the pointer. It's moved with transforms only, so no repaints.
-  const gx = useMotionValue(typeof window === 'undefined' ? 0 : window.innerWidth * 0.7)
-  const gy = useMotionValue(typeof window === 'undefined' ? 0 : window.innerHeight * 0.3)
-  const sgx = useSpring(gx, { stiffness: 40, damping: 20 })
-  const sgy = useSpring(gy, { stiffness: 40, damping: 20 })
-
-  const onMove = (e) => {
-    const r = ref.current.getBoundingClientRect()
-    gx.set(e.clientX - r.left)
-    gy.set(e.clientY - r.top)
-  }
-
-  const state = ready ? 'show' : 'hidden'
-
+export default function Hero() {
   return (
     <section
       id="top"
       className="relative isolate flex min-h-svh flex-col justify-end overflow-hidden pt-[calc(var(--nav-h)_+_40px)] short:pt-[calc(var(--nav-h)_+_20px)]"
-      ref={ref}
-      onPointerMove={onMove}
     >
       <div
-        className="absolute inset-0 -z-2 bg-[linear-gradient(var(--line)_1px,transparent_1px),linear-gradient(90deg,var(--line)_1px,transparent_1px)] bg-[length:72px_72px] bg-top [mask-image:radial-gradient(ellipse_80%_70%_at_50%_35%,#000_25%,transparent_75%)]"
-        aria-hidden="true"
-      />
-      <motion.div
-        className="pointer-events-none absolute top-0 left-0 -z-1 -mt-[600px] -ml-[600px] size-[1200px] bg-[radial-gradient(circle,var(--glow),transparent_50%)] will-change-transform"
-        style={{ x: sgx, y: sgy }}
+        className="pointer-events-none absolute -top-[300px] right-[-200px] -z-1 size-[900px] bg-[radial-gradient(circle,var(--glow),transparent_55%)]"
         aria-hidden="true"
       />
 
-      <motion.div className="wrap relative origin-bottom" style={{ y, opacity, scale }}>
+      <div className="wrap relative">
         <motion.p
           className="inline-flex items-center gap-2.5 rounded-full border border-line-2 bg-chip py-2 pr-4 pl-3 text-[14px] text-fg-2 backdrop-blur-[8px]"
           variants={fade}
-          custom={-3}
+          custom={0}
           initial="hidden"
-          animate={state}
+          animate="show"
         >
           <span className={`${dot} size-2`} aria-hidden="true" />
           {profile.role} at{' '}
@@ -85,43 +43,39 @@ export default function Hero({ ready }) {
           {profile.years}+ yrs
         </motion.p>
 
-        <h1 className="mt-[26px] text-[34px] leading-none font-semibold tracking-[-0.05em] short:mt-5">
+        <motion.h1
+          className="mt-[26px] text-[34px] leading-none font-semibold tracking-[-0.05em] short:mt-5"
+          variants={fade}
+          custom={1}
+          initial="hidden"
+          animate="show"
+        >
           <span className="sr-only">
             Hello, I’m {profile.name} — {profile.roles.join(' ')}
           </span>
-          <span className={titleMask} aria-hidden="true">
-            <motion.span
-              className="block text-[clamp(1.9rem,4.4vw,4.6rem)] font-medium tracking-[-0.04em] text-fg-2 max-sm:text-[8.4vw]"
-              variants={rise}
-              custom={0}
-              initial="hidden"
-              animate={state}
-            >
-              Hello, I’m <em className={`${emphasis} text-[1.08em]`}>{profile.first}</em>
-            </motion.span>
+          <span
+            className="block pb-[0.09em] text-[clamp(1.9rem,4.4vw,4.6rem)] font-medium tracking-[-0.04em] text-fg-2 max-sm:text-[8.4vw]"
+            aria-hidden="true"
+          >
+            Hello, I’m <em className={`${emphasis} text-[1.08em]`}>{profile.first}</em>
           </span>
           {/* Sized so the longest role fits on one line; the line keeps its height while typing. */}
-          <span className={titleMask} aria-hidden="true">
-            <motion.span
-              className="block min-h-[1em] text-[clamp(2.4rem,7.2vw,7.6rem)] whitespace-nowrap short:text-[min(7.2vw,13svh)] max-sm:min-h-[2em] max-sm:text-[11.6vw] max-sm:whitespace-normal"
-              variants={rise}
-              custom={1}
-              initial="hidden"
-              animate={state}
-            >
-              <Typewriter phrases={profile.roles} start={ready} />
-            </motion.span>
+          <span
+            className="block min-h-[1em] pb-[0.09em] text-[clamp(2.4rem,7.2vw,7.6rem)] whitespace-nowrap short:text-[min(7.2vw,13svh)] max-sm:min-h-[2em] max-sm:text-[11.6vw] max-sm:whitespace-normal"
+            aria-hidden="true"
+          >
+            <Typewriter phrases={profile.roles} />
           </span>
-        </h1>
+        </motion.h1>
 
         <div className="mt-[clamp(36px,5vw,64px)] grid grid-cols-[1.1fr_1fr] items-end gap-[clamp(28px,5vw,80px)] short:mt-7 max-lg:grid-cols-1 max-lg:items-start">
           <div>
             <motion.p
               className="max-w-[44ch] text-[clamp(1.05rem,1.35vw,1.22rem)] leading-[1.55] text-fg-2"
               variants={fade}
-              custom={0}
+              custom={2}
               initial="hidden"
-              animate={state}
+              animate="show"
             >
               A MERN stack developer with {profile.years}+ years of building production software, now at{' '}
               {profile.company}. I build web apps in React, mobile apps in React Native, and the APIs
@@ -130,91 +84,54 @@ export default function Hero({ ready }) {
             <motion.div
               className="mt-[30px] flex flex-wrap gap-3"
               variants={fade}
-              custom={1}
+              custom={3}
               initial="hidden"
-              animate={state}
+              animate="show"
             >
-              <Magnetic>
-                <a href="#work" className={`${btn} ${btnLg} ${btnAccent}`}>
-                  <RollText text="See my work" />
-                  <ArrowIcon down />
-                </a>
-              </Magnetic>
-              <Magnetic>
-                <a
-                  href={profile.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`${btn} ${btnLg} ${btnGhost}`}
-                >
-                  <GitHubIcon />
-                  <RollText text={`@${profile.githubHandle}`} />
-                </a>
-              </Magnetic>
-              <Magnetic>
-                <a
-                  href={profile.leetcode}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`${btn} ${btnLg} ${btnGhost}`}
-                >
-                  <CodeIcon />
-                  <RollText text="LeetCode" />
-                </a>
-              </Magnetic>
-              <Magnetic>
-                <a
-                  href={profile.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`${btn} ${btnLg} ${btnGhost}`}
-                >
-                  <BriefcaseIcon />
-                  <RollText text="LinkedIn" />
-                </a>
-              </Magnetic>
+              <a href="#work" className={`${btn} ${btnLg} ${btnAccent}`}>
+                See my work
+                <ArrowIcon down />
+              </a>
+              <a href={profile.github} target="_blank" rel="noreferrer" className={`${btn} ${btnLg} ${btnGhost}`}>
+                <GitHubIcon />@{profile.githubHandle}
+              </a>
+              <a href={profile.leetcode} target="_blank" rel="noreferrer" className={`${btn} ${btnLg} ${btnGhost}`}>
+                <CodeIcon />
+                LeetCode
+              </a>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" className={`${btn} ${btnLg} ${btnGhost}`}>
+                <BriefcaseIcon />
+                LinkedIn
+              </a>
               {/* Phones only: wider screens have the Resume button in the nav. */}
-              <Magnetic className="sm:hidden">
-                <a
-                  href={profile.resume}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`${btn} ${btnLg} ${btnGhost}`}
-                >
-                  <ResumeIcon />
-                  <RollText text="Resume" />
-                </a>
-              </Magnetic>
+              <a
+                href={profile.resume}
+                target="_blank"
+                rel="noreferrer"
+                className={`${btn} ${btnLg} ${btnGhost} sm:hidden`}
+              >
+                <ResumeIcon />
+                Resume
+              </a>
             </motion.div>
           </div>
 
           <motion.div
             className="w-full max-w-[540px] justify-self-end max-lg:max-w-none max-lg:justify-self-stretch"
             variants={fade}
-            custom={2}
+            custom={4}
             initial="hidden"
-            animate={state}
+            animate="show"
           >
-            <Terminal start={ready} delay={2200} />
+            <Terminal delay={900} />
           </motion.div>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div
-        className="wrap mt-[clamp(36px,5vw,56px)] flex items-center justify-between border-t border-line pt-[22px] pb-6 font-mono text-[12px] leading-[normal] tracking-[0.08em] text-muted uppercase short:mt-7 short:pt-4 short:pb-[18px]"
-        variants={fade}
-        custom={4}
-        initial="hidden"
-        animate={state}
-      >
-        <span className="inline-flex items-center gap-3">
-          <span className="relative h-7 w-px overflow-hidden bg-line-2 max-sm:hidden" aria-hidden="true">
-            <span className="absolute inset-x-0 top-0 h-[40%] animate-drip bg-mark" />
-          </span>
-          Scroll
-        </span>
+      <div className="wrap mt-[clamp(36px,5vw,56px)] flex items-center justify-between border-t border-line pt-[22px] pb-6 font-mono text-[12px] leading-[normal] tracking-[0.08em] text-muted uppercase short:mt-7 short:pt-4 short:pb-[18px]">
+        <span>Scroll ↓</span>
         <span className="max-sm:hidden">Web · Mobile · Backend — {new Date().getFullYear()}</span>
-      </motion.div>
+      </div>
     </section>
   )
 }
@@ -227,14 +144,14 @@ const script = [
 ]
 
 // Types each phrase, holds it, deletes it, then moves to the next one.
-function Typewriter({ phrases, start }) {
+function Typewriter({ phrases }) {
   const reduce = useReducedMotion()
   const [index, setIndex] = useState(0)
   const [chars, setChars] = useState(0)
   const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
-    if (!start || reduce) return
+    if (reduce) return
     const full = phrases[index]
     let delay
     if (!deleting) delay = chars === 0 ? 900 : chars < full.length ? 55 + Math.random() * 50 : 2000
@@ -249,7 +166,7 @@ function Typewriter({ phrases, start }) {
       }
     }, delay)
     return () => clearTimeout(t)
-  }, [start, reduce, phrases, index, chars, deleting])
+  }, [reduce, phrases, index, chars, deleting])
 
   const text = reduce ? phrases[0] : phrases[index].slice(0, chars)
 
@@ -261,17 +178,17 @@ function Typewriter({ phrases, start }) {
   )
 }
 
-function Terminal({ start, delay = 0 }) {
+function Terminal({ delay = 0 }) {
   const reduce = useReducedMotion()
   const [line, setLine] = useState(0)
   const [chars, setChars] = useState(0)
   const [armed, setArmed] = useState(false)
 
   useEffect(() => {
-    if (!start || reduce) return
+    if (reduce) return
     const t = setTimeout(() => setArmed(true), delay)
     return () => clearTimeout(t)
-  }, [start, reduce, delay])
+  }, [reduce, delay])
 
   useEffect(() => {
     if (!armed || reduce || line >= script.length) return

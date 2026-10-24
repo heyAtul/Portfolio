@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark" class="bg-page [&.is-loading]:overflow-hidden [&.menu-open]:overflow-hidden">
+<html lang="en" data-theme="dark" class="bg-page [&.menu-open]:overflow-hidden">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />
@@ -18,20 +18,11 @@
         if (theme === 'light') {
           document.querySelector('meta[name="theme-color"]').setAttribute('content', '#dff0fd')
         }
-
-        // The built page arrives prerendered, intro screen included. Hide that copy of the
-        // intro when the app is going to skip it (seen this session, or reduced motion).
-        var skipIntro = matchMedia('(prefers-reduced-motion: reduce)').matches
-        try {
-          skipIntro = skipIntro || sessionStorage.getItem('intro-seen') === '1'
-        } catch (e) {}
-        if (skipIntro) document.documentElement.classList.add('no-intro')
       })()
     </script>
     <noscript>
       <style>
-        /* Without JavaScript, show the prerendered page as is: no intro, nothing waiting to animate in. */
-        [data-preloader] { display: none; }
+        /* Without JavaScript, show the prerendered page as is: nothing waiting to fade in. */
         #root [style] { opacity: 1 !important; transform: none !important; }
       </style>
     </noscript>
