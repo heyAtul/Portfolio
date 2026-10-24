@@ -149,3 +149,43 @@ Link: https://atulcode.com
 Link: https://github.com/heyAtul/Portfolio
   Title: AtulCode Portfolio (Source code)
   Description: React 19, Vite, Tailwind CSS, Motion and Lenis, prerendered for SEO.
+
+
+============================================================
+5. CUBE MOBILE APP
+============================================================
+
+PROJECT NAME
+CUBE Mobile App: Field Operations
+
+ASSOCIATED WITH
+CUBE.MS
+
+DESCRIPTION
+CUBE's iOS and Android app for construction site teams, built with React Native and Expo. Site engineers use it to fill in inspection and progress forms, check drawings and talk to their project team from the site, without going back to a desk. I have led its development since January 2024, across 18+ releases, 1,000+ installs and 280+ monthly active users.
+
+• Digital site forms: inspections, progress updates and custom forms replace paper (33,000+ created so far). Forms take photos with markup, e-signatures, location tags and file uploads, and some fields calculate themselves.
+• Multi-level approvals: each form moves through a set chain of approvers and is fully approved in a median of under 3 days. Approved progress feeds straight into contract progress and billing.
+• Files on site: browse project files and their versions, open drawings on the phone, and scan the QR code on a printed sheet to check it is the latest version.
+• Team chat and alerts: real-time project chat, plus push notifications that open the right screen when tapped.
+• Contracts and schedules: look up contract details and project schedules from the field.
+• Secure sign-in: choose your company workspace, sign in, and protect the account with two-factor authentication.
+• Fast, safe releases: builds with EAS Build, quick fixes go out as over-the-air updates, and forced updates keep everyone on a supported version. Crashes are tracked in Sentry.
+• One logic layer with the web app: 25+ React hooks and a shared form-validation engine run on both web and mobile, so the two apps behave the same.
+
+SHORT DESCRIPTION
+CUBE's iOS and Android app for construction site teams: digital inspection and progress forms with multi-level approvals, project files, team chat and alerts. Built with React Native and Expo; 1,000+ installs and 280+ monthly active users.
+
+SKILLS
+React Native · Expo · TypeScript · Redux Toolkit · Sentry
+
+DATES
+Jan 2024 – Present
+
+MEDIA
+Link: https://play.google.com/store/apps/details?id=com.prod.cube.ms
+  Title: CUBE on Google Play
+  Description: The Android app for construction site teams: forms, approvals, files and chat.
+Link: https://apps.apple.com/in/app/id6504751772
+  Title: CUBE on the App Store
+  Description: The iPhone and iPad app for construction site teams: forms, approvals, files and chat.
