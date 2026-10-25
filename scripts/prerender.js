@@ -1,26 +1,20 @@
-// Runs after `vite build`: writes the server-rendered page and its structured data
-// into dist/index.html, so search engines see the content without running JavaScript.
-// In the browser, main.jsx renders the app from scratch over this copy.
-import { readFile, rm, writeFile } from 'node:fs/promises'
+// Runs after `vite build` (see the "build" script in package.json).
+// It puts the page's HTML and the structured data into dist/index.html,
+// so search engines can read everything without running JavaScript.
+import fs from 'node:fs'
+import { render, structuredData } from '../dist-ssr/entry-server.js'
 
-const ssrDir = new URL('../dist-ssr/', import.meta.url)
-const page = new URL('../dist/index.html', import.meta.url)
+// 1. Read the page Vite just built. Its <div id="root"> is still empty.
+let html = fs.readFileSync('dist/index.html', 'utf8')
 
-const { render, structuredData } = await import(new URL('entry-server.js', ssrDir))
+// 2. Fill it with the app's HTML. (The `() =>` keeps any `$` in the text as-is.)
+html = html.replace('<div id="root"></div>', () => `<div id="root">${render()}</div>`)
 
-function inject(html, marker, content) {
-  if (!html.includes(marker)) throw new Error(`prerender: "${marker}" not found in index.html`)
-  // A function, so `$` in the content isn't read as a replacement pattern.
-  return html.replace(marker, () => content)
-}
-
-// `<` is escaped so nothing in the JSON can close the script tag early.
+// 3. Add the structured data to <head>. (Escaping `<` stops the text from closing the tag early.)
 const json = JSON.stringify(structuredData()).replace(/</g, '\\u003c')
+html = html.replace('</head>', () => `<script type="application/ld+json">${json}</script></head>`)
 
-let html = await readFile(page, 'utf8')
-html = inject(html, '<div id="root"></div>', `<div id="root">${render()}</div>`)
-html = inject(html, '</head>', `  <script type="application/ld+json">${json}</script>\n  </head>`)
-await writeFile(page, html)
-await rm(ssrDir, { recursive: true, force: true })
-
-console.log('prerender: wrote content and structured data into dist/index.html')
+// 4. Save it, and delete the temporary server build.
+fs.writeFileSync('dist/index.html', html)
+fs.rmSync('dist-ssr', { recursive: true, force: true })
+console.log('prerender: done')
