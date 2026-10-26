@@ -54,6 +54,8 @@ export const stack = [
   'Electron',
   'HTML5',
   'CSS3',
+  'SEO',
+  'Accessibility',
   'Node.js',
   'Express.js',
   'REST APIs',
@@ -63,7 +65,7 @@ export const stack = [
   'Redis',
   'Zod',
   'JWT',
-  'SSO',
+  'OAuth',
   'AWS S3',
   'AWS EC2',
   'AWS IAM',
@@ -129,7 +131,7 @@ export const experience = [
       },
       {
         label: 'Backend',
-        items: ['Node.js', 'Express.js', 'REST APIs', 'MongoDB', 'Redis', 'Zod', 'JWT', 'SSO'],
+        items: ['Node.js', 'Express.js', 'REST APIs', 'MongoDB', 'Redis', 'Zod', 'JWT', 'OAuth'],
       },
       {
         label: 'Cloud & Tools',
@@ -188,6 +190,8 @@ export const skills = [
       { name: 'Electron', logo: 'electron' },
       { name: 'HTML5', logo: 'html5' },
       { name: 'CSS3', logo: 'css' },
+      { name: 'SEO', logo: 'search' },
+      { name: 'Accessibility', logo: 'accessibility' },
     ],
   },
   {
@@ -204,7 +208,7 @@ export const skills = [
       { name: 'Redis', logo: 'redis' },
       { name: 'Zod', logo: 'zod' },
       { name: 'JWT', logo: 'jsonwebtokens' },
-      { name: 'SSO', logo: 'key' },
+      { name: 'OAuth', logo: 'key' },
     ],
   },
   {
